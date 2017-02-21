@@ -1,0 +1,25 @@
+---
+
+- name: Install borg packages
+  package:
+    name: '{{ item }}'
+    state: 'present'
+  with_flattened:
+    - '{{ borg_server__base_packages }}'
+    - '{{ borg_server__packages }}'
+
+- name: Create borg user
+  user:
+    name: '{{ borg_server__user }}'
+    groups: 'sshusers'
+    append: 'no'
+    system: 'yes'
+    state: 'present'
+
+- name: Create repositories directory
+  file:
+    path: '{{ borg_server__repositories_dir }} '
+    state: 'directory'
+    owner: '{{ borg_server__user }}'
+    group: '{{ borg_server__user }}'
+    mode: '0700'

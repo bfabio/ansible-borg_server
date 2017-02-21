@@ -1,0 +1,60 @@
+---
+# .. vim: foldmarker=[[[,]]]:foldmethod=marker
+
+# debops.borg_server default variables [[[
+# =================================
+
+# .. contents:: Sections
+#    :local:
+#
+# .. include:: includes/all.rst
+
+
+# General configuration [[[
+# -------------------------
+
+# .. envvar:: borg_server__base_packages [[[
+#
+# List of APT packages to install for :program:`borg` support.
+borg_server__base_packages: [ 'borgbackup' ]
+
+                                                                   # ]]]
+# .. envvar:: borg_server__packages [[[
+#
+# List of additional APT packages to install with :program:`borg`.
+borg_server__packages: []
+                                                                   # ]]]
+                                                                   # ]]]
+
+# Backup configuration [[[
+# -------------------------
+
+# .. envvar:: borg_server__repositories_dir [[[
+#
+# Directory where to save the repositories.
+borg_server__repositories_dir: '/srv/borg'
+                                                                   # ]]]
+
+# .. envvar:: borg_server__user [[[
+#
+# Owner of the repositories.
+borg_server__user: 'borg'
+                                                                   # ]]]
+                                                                   # ]]]
+
+# Role-dependent configuration [[[
+# --------------------------------
+
+# .. envvar:: borg_backup__apt_preferences__dependent_list [[[
+#
+# Configuration for the ``debops.apt_preferences role``. Get borg from backports
+# on Debian jessie.
+borg_server__apt_preferences__dependent_list:
+
+  - package: 'borgbackup'
+    backports: [ 'jessie' ]
+    reason: 'Jessie does not have a borg package in main'
+    role: 'debops.borg_server'
+                                                                   # ]]]
+                                                                   # ]]]
+                                                                   # ]]]
